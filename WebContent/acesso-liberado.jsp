@@ -1,17 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
+ <jsp:useBean id="calcula"  class="beans.BeanCursoJSP" type="beans.BeanCursoJSP" scope="page"/> 
+  <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
-	
-	<h2>ACESSO LIBERADO PARA O SISTEMA em JSP</h2>
+
+	<jsp:setProperty property="*" name="calcula"/>
 	<br>
-	<h3>Seja bem vindo</h3>
-		
-	<a href="/curso-jsp/cadastroUsuario.jsp">Cadastro de Usuários</a>	
+	<h3>Seja bem vindo ao sistema</h3>
+
+	<a href="salvarUsuario?acao=listarTodos"><img alt="Logar"
+		src="resources/img/user.png" height="100px" width="100px"
+		title="Logar"></a>
+
+	<a href="salvarProduto?acao=listarTodos"> <img width="100px"
+		height="100px" title="Cadastro de Produto" alt="Cadastro de Produto"
+		src="resources/img/icone-produto.png">
+	</a>
+	
 </body>
 </html>
+

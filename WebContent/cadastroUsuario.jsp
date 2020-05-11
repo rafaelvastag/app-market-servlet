@@ -11,9 +11,12 @@
 <body>
 	<center>
 		<h1>Cadastro de Usuário</h1>
+		<h3 style="color: orange">${msg}</h3>
 	</center>
 
-	<form action="salvarUsuario" method="post" style="position: center">
+
+	<form action="salvarUsuario" method="post" style="position: center"
+		id="formUser">
 		<ul class="form-style-1">
 			<li>
 				<table>
@@ -24,17 +27,30 @@
 					</tr>
 					<tr>
 						<td>Login:</td>
-						<td><input type="text" id="Login" name="login"
+						<td><input type="text" id="login" name="login"
 							value="${user.login}" class="field-long"></td>
 					</tr>
 					<tr>
 						<td>Senha:</td>
-						<td><input type="password" id="Senha" name="senha"
+						<td><input type="password" id="senha" name="senha"
 							value="${user.senha}" class="field-long"></td>
 					</tr>
 					<tr>
+						<td>Nome:</td>
+						<td><input type="text" id="nome" name="nome"
+							value="${user.nome}"></td>
+					</tr>
+					<tr>
+						<td>Telefone:</td>
+						<td><input type="text" id="telefone" name="telefone"
+							value="${user.telefone}"></td>
+					</tr>
+					<tr>
 						<td></td>
-						<td><input type="submit" value="Salvar"></td>
+						<td><input type="submit" value="Salvar"
+							onclick="document.getElementById('formUser').action = 'salvarUsuario?acao=salvar'; return validarCampos() ? true : false">
+							<input type="submit" value="Cancelar"
+							onclick="document.getElementById('formUser').action = 'salvarUsuario?acao=reset' "></td>
 					</tr>
 				</table>
 			</li>
@@ -46,8 +62,10 @@
 		<table class="responsive-table">
 
 			<tr>
+				<th>Id</th>
 				<th>Login</th>
-				<th>Senha</th>
+				<th>Nome</th>
+				<th>Telefone</th>
 				<th>Excluir</th>
 				<th>Editar</th>
 			</tr>
@@ -55,20 +73,48 @@
 			<c:forEach items="${usuarios}" var="user">
 				<tr>
 
-					<td style="width: 150px"><c:out value="${user.login}"></c:out></td>
+					<td style="width: 150px" align="center"><c:out
+							value="${user.id}"></c:out></td>
 
-					<td><c:out value="${user.senha}"></c:out></td>
+					<td style="width: 150px" align="center"><c:out
+							value="${user.login}"></c:out></td>
 
-					<td><a href="salvarUsuario?acao=delete&user=${user.login}"><img
+					<td style="width: 150px" align="center"><c:out
+							value="${user.nome}"></c:out></td>
+
+					<td style="width: 150px" align="center"><c:out
+							value="${user.telefone}"></c:out></td>
+
+					<td style="width: 150px" align="center"><a
+						href="salvarUsuario?acao=delete&user=${user.id}"><img
 							alt="Excluir" width="20px" height="20px"
 							src="resources/img/excluir.png" title="Excluir"></a></td>
 
-					<td><a href="salvarUsuario?acao=editar&user=${user.login}"><img
+					<td style="width: 150px" align="center"><a
+						href="salvarUsuario?acao=editar&user=${user.id}"><img
 							alt="Editar" src="resources/img/edit.png" height="20px"
 							width="20px" title="Editar"></a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
+	<script type="text/javascript">
+		function validarCampos() {
+			if (document.getElementById("login").value == '') {
+				alert('Informe o Login');
+				return false;
+			} else if (document.getElementById("senha").value == '') {
+				alert('Informe a Senha');
+				return false;
+			} else if (document.getElementById("nome").value == '') {
+				alert('Informe o Nome');
+				return false;
+			} else if (document.getElementById("telefone").value == '') {
+				alert('Informe o Telefone');
+				return false;
+			}
+			return true;
+		}
+	</script>
 </body>
 </html>
