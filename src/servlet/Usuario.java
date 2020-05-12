@@ -80,6 +80,13 @@ public class Usuario extends HttpServlet {
 			String senha = request.getParameter("senha");
 			String nome = request.getParameter("nome");
 			String telefone = request.getParameter("telefone");
+			String cep = request.getParameter("cep");
+			String rua = request.getParameter("rua");
+			String bairro = request.getParameter("bairro");
+			String cidade = request.getParameter("cidade");
+			String estado = request.getParameter("uf");
+			String ibge = request.getParameter("ibge");
+			
 
 			BeanCursoJSP bean = new BeanCursoJSP();
 
@@ -88,7 +95,13 @@ public class Usuario extends HttpServlet {
 			bean.setSenha(senha);
 			bean.setNome(nome);
 			bean.setTelefone(telefone);
-
+			bean.setCep(cep);
+			bean.setRua(rua);
+			bean.setBairro(bairro);
+			bean.setCidade(cidade);
+			bean.setEstado(estado);
+			bean.setIbge(ibge);
+			
 			try {
 				
 				if (id == null || id.isEmpty() && !userDAO.validarLogin(login)) {
@@ -99,6 +112,7 @@ public class Usuario extends HttpServlet {
 				if (id == null || id.isEmpty() && userDAO.validarLogin(login)) {
 
 					userDAO.salvar(bean);
+					request.setAttribute("msg", "Usuário salvo com sucesso! ");
 				} else if(id != null && !id.isEmpty()) {
 					
 					if (!userDAO.validarLoginEdicao(login, id)) {
