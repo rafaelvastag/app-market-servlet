@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
- <h2>Acesso NEGADO ao SISTEMA!!!!</h2>
+<a href="index.jsp" ><img alt="Inicio" src="resources/img/voltar.png" height="30px" width="30px"></a>
+ <h2>Acesso NEGADO</h2>
 </body>
 </html>

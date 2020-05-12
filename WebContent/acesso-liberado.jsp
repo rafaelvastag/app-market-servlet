@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href="index.jsp" ><img alt="Inicio" src="resources/img/sair.png" height="30px" width="30px"></a>
 
 	<jsp:setProperty property="*" name="calcula"/>
 	<br>

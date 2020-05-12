@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="resources/css/cadastro.css">
 </head>
 <body>
+<a href="acesso-liberado.jsp" ><img alt="Inicio" src="resources/img/inicio.png" height="30px" width="30px"></a>
+<a href="index.jsp" ><img alt="Inicio" src="resources/img/sair.png" height="30px" width="30px"></a>
 	<center>
 		<h1>Cadastro de Produto</h1>
 		<h3 style="color: orange;">${msg}</h3>
