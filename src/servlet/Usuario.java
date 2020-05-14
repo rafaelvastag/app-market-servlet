@@ -174,24 +174,30 @@ public class Usuario extends HttpServlet {
 
 						Part imagemFoto = request.getPart("foto");
 
-						if (imagemFoto != null) {
+						if (imagemFoto != null && imagemFoto.getInputStream().available() > 0) {
 
 							String fotoBase64 = new Base64()
 									.encodeBase64String(convertStreamToByte(imagemFoto.getInputStream()));
 							bean.setFotoBase64(fotoBase64);
 							bean.setContentType(imagemFoto.getContentType());
 
+						} else {
+							bean.setFotoBase64(request.getParameter("fotoTemp"));
+							bean.setContentType(request.getParameter("contentTypeTempImg"));
 						}
 
 						Part curriculo = request.getPart("curriculo");
 
-						if (curriculo != null) {
+						if (curriculo != null && curriculo.getInputStream().available() > 0) {
 
 							String curriculoBase64 = new Base64()
 									.encodeBase64String(convertStreamToByte(curriculo.getInputStream()));
 							bean.setCurriculoBase64(curriculoBase64);
 							bean.setContentTypeCurriculo(curriculo.getContentType());
 
+						}else {
+							bean.setCurriculoBase64(request.getParameter("curriculoTemp"));
+							bean.setContentTypeCurriculo(request.getParameter("contentTypeTempPdf"));
 						}
 
 					}
