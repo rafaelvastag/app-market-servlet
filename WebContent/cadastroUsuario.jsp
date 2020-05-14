@@ -27,14 +27,14 @@
 
 
 	<form action="salvarUsuario" method="post" style="position: center"
-		id="formUser">
+		id="formUser" enctype="multipart/form-data">
 		<ul class="form-style-1">
 			<li>
 				<table>
 					<tr>
 						<td>Código</td>
 						<td><input type="text" id="id" name="id" value="${user.id}"
-							class="field-long"></td>
+							class="field-long" placeholder="Não Obrigatório"></td>
 
 						<td>Logradouro:</td>
 						<td><input type="text" id="rua" name="rua"
@@ -74,7 +74,7 @@
 					<tr>
 						<td>Telefone:</td>
 						<td><input type="text" id="telefone" name="telefone"
-							value="${user.telefone}"></td>
+							value="${user.telefone}" placeholder="99999-9999"></td>
 
 						<td>IBGE:</td>
 						<td><input type="text" id="ibge" name="ibge"
@@ -84,7 +84,18 @@
 					<tr>
 						<td>CEP:</td>
 						<td><input type="text" id="cep" name="cep"
-							onblur="consultaCep();" value="${user.cep}"></td>
+							onblur="consultaCep();" value="${user.cep}"
+							placeholder="00000-000"></td>
+					</tr>
+
+					<tr>
+						<td>Foto:</td>
+						<td><input type="file" name="foto" value="Foto"></td>
+					</tr>
+
+					<tr>
+						<td>Currículo:</td>
+						<td><input type="file" name="curriculo" value="curriculo"></td>
 					</tr>
 
 					<tr>
@@ -104,40 +115,45 @@
 		<table class="responsive-table">
 
 			<tr>
-				<th align="center" >Id</th>
+				<th align="center">Id</th>
 				<th align="center">Login</th>
 				<th align="center">Nome</th>
-				<th align="center">Excluir</th>
-				<th align="center">Editar</th>
 				<th align="center">Fones</th>
+				<th align="center">Editar</th>
+				<th align="center">Excluir</th>
+
+
 			</tr>
 
 			<c:forEach items="${usuarios}" var="user">
 				<tr>
 
-					<td style="width: 150px" align="center"><c:out
-							value="${user.id}"></c:out></td>
+					<td style="width: 150px" align="center"><a
+						href="salvarUsuario?acao=download&tipo=imagem&user=${user.id}"><img
+							src='<c:out value="${user.tempFotoUser}"></c:out>' width="35px"
+							height="35px"> </a></td>
 
-					<td style="width: 150px" align="center"><c:out
-							value="${user.login}"></c:out></td>
+					<td style="width: 150px" align="center"><a
+						href="salvarUsuario?acao=download&tipo=curriculo&user=${user.id}">Currículo</a></td>
 
 					<td style="width: 150px" align="center"><c:out
 							value="${user.nome}"></c:out></td>
 
 					<td style="width: 150px" align="center"><a
-						href="salvarUsuario?acao=delete&user=${user.id}"><img
-							alt="Excluir" width="20px" height="20px"
-							src="resources/img/excluir.png" title="Excluir"></a></td>
+						href="salvarTelefones?acao=addFone&user=${user.id}"><img
+							alt="Telefones" src="resources/img/phone.png" height="20px"
+							width="20px" title="Telefone"></a></td>
 
 					<td style="width: 150px" align="center"><a
 						href="salvarUsuario?acao=editar&user=${user.id}"><img
 							alt="Editar" src="resources/img/edit.png" height="20px"
 							width="20px" title="Editar"></a></td>
-							
+
+
 					<td style="width: 150px" align="center"><a
-						href="salvarTelefones?user=${user.id}"><img
-							alt="Telefones" src="resources/img/phone.png" height="20px"
-							width="20px" title="Telefone"></a></td>
+						href="salvarUsuario?acao=delete&user=${user.id}"><img
+							alt="Excluir" width="20px" height="20px"
+							src="resources/img/excluir.png" title="Excluir"></a></td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -84,7 +84,7 @@
 							value="${fone.tipo}"></c:out></td>
 
 					<td style="width: 150px" align="center"><a
-						href="salvarTelefones?acao=delete&user=${fone.id}"><img
+						href="salvarTelefones?acao=delete&numero=${fone.id}&user=${fone.usuario}"><img
 							alt="Excluir" width="20px" height="20px"
 							src="resources/img/excluir.png" title="Excluir"></a></td>
 				</tr>

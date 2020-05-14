@@ -95,8 +95,6 @@ public class Produto extends HttpServlet {
 
 				} else if (id == null || id.isEmpty() && !produtoDAO.validarNome(nome)) {// QUANDO
 																							// FDOR
-																							// PRODUTO
-																							// NOVO
 					msg = "Produto já existe com o mesmo nome!";
 					podeInserir = false;
 
