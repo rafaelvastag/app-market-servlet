@@ -6,11 +6,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Cadastro de Produto</title>
+<script src="resources/js/jquery.min.js" type="text/javascript"></script>
+<script src="resources/js/jquery.maskMoney.min.js"
+	type="text/javascript"></script>
 <link rel="stylesheet" href="resources/css/cadastro.css">
 </head>
 <body>
-<a href="acesso-liberado.jsp" ><img alt="Inicio" src="resources/img/inicio.png" height="30px" width="30px"></a>
-<a href="index.jsp" ><img alt="Inicio" src="resources/img/sair.png" height="30px" width="30px"></a>
+	<a href="acesso-liberado.jsp"><img alt="Inicio"
+		src="resources/img/inicio.png" height="30px" width="30px"></a>
+	<a href="index.jsp"><img alt="Inicio" src="resources/img/sair.png"
+		height="30px" width="30px"></a>
 	<center>
 		<h1>Cadastro de Produto</h1>
 		<h3 style="color: orange;">${msg}</h3>
@@ -33,7 +38,7 @@
 
 					<tr>
 						<td>Quantidade:</td>
-						<td><input type="text" id="quantidade" name="quantidade"
+						<td><input type="number" id="quantidade" name="quantidade"
 							value="${produto.quantidade}"></td>
 					</tr>
 					<tr>
@@ -61,8 +66,9 @@
 				<th>Nome</th>
 				<th>Quantidade</th>
 				<th>Valor R$</th>
-				<th>Delete</th>
 				<th>Editar</th>
+				<th>Delete</th>
+				
 			</tr>
 			<c:forEach items="${produtos}" var="produto">
 				<tr>
@@ -78,17 +84,27 @@
 							value="${produto.valor}"></c:out></td>
 
 					<td style="width: 150px" align="center"><a
-						href="salvarProduto?acao=delete&produto=${produto.id}"><img
-							src="resources/img/excluir.png" alt="excluir" title="Excluir"
-							width="20px" height="20px"> </a></td>
-					<td style="width: 150px" align="center"><a
 						href="salvarProduto?acao=editar&produto=${produto.id}"><img
 							alt="Editar" title="Editar" src="resources/img/edit.png"
 							width="20px" height="20px"></a></td>
+
+					<td style="width: 150px" align="center"><a
+						href="salvarProduto?acao=delete&produto=${produto.id}"><img
+							src="resources/img/excluir.png" alt="excluir" title="Excluir"
+							width="20px" height="20px"
+							onclick="return confirm('Confirmar a exclusão?');"> </a></td>
+
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 
 </body>
+
+
+<script type="text/javascript">
+	$(function() {
+		$('#valor').maskMoney();
+	})
+</script>
 </html>

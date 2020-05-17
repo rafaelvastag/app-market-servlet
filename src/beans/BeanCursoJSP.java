@@ -14,13 +14,49 @@ public class BeanCursoJSP {
 	private String estado;
 	private String ibge;
 	private String fotoBase64;
+	private String fotoBase64miniatura;
 	private String contentType;
 	private String tempFotoUser;
 	private String curriculoBase64;
 	private String contentTypeCurriculo;
 	private String tempCurriculoUser;
 	
-	
+	private boolean status = false;
+	private boolean atualizarImage = true;
+	private boolean atualizarPdf = true;
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public boolean isAtualizarImage() {
+		return atualizarImage;
+	}
+
+	public void setAtualizarImage(boolean atualizarImage) {
+		this.atualizarImage = atualizarImage;
+	}
+
+	public boolean isAtualizarPdf() {
+		return atualizarPdf;
+	}
+
+	public void setAtualizarPdf(boolean atualizarPdf) {
+		this.atualizarPdf = atualizarPdf;
+	}
+
+	public void setFotoBase64miniatura(String fotoBase64miniatura) {
+		this.fotoBase64miniatura = fotoBase64miniatura;
+	}
+
+	public String getFotoBase64miniatura() {
+		return fotoBase64miniatura;
+	}
+
 	public String getCurriculoBase64() {
 		return curriculoBase64;
 	}
@@ -46,10 +82,10 @@ public class BeanCursoJSP {
 	}
 
 	public void setTempFotoUser() {
-		
+
 		tempFotoUser = "data:" + getContentType() + ";base64," + getFotoBase64();
 	}
-	
+
 	public String getTempFotoUser() {
 		return tempFotoUser;
 	}

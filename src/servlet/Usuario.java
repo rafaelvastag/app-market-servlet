@@ -1,11 +1,14 @@
 package servlet;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -76,7 +80,8 @@ public class Usuario extends HttpServlet {
 
 			try {
 				BeanCursoJSP usuario = userDAO.consultar(user);
-				if (usuario != null && !usuario.getContentType().isEmpty()) {
+
+				if (usuario != null) {
 
 					String tipo = request.getParameter("tipo");
 					byte[] arqByte = null;
@@ -164,6 +169,12 @@ public class Usuario extends HttpServlet {
 			bean.setEstado(estado);
 			bean.setIbge(ibge);
 
+			if (request.getParameter("status") != null && request.getParameter("status").equalsIgnoreCase("on")) {
+				bean.setStatus(true);
+			} else {
+				bean.setStatus(false);
+			}
+
 			try {
 
 				/* Inicio File UPLOAD de imagens e PDF */
@@ -181,9 +192,34 @@ public class Usuario extends HttpServlet {
 							bean.setFotoBase64(fotoBase64);
 							bean.setContentType(imagemFoto.getContentType());
 
+							/* Inicio miniatura imagem */
+
+							/* Criar um buffer de Image */
+							/* Decodificar base64 */
+							byte[] imagemByteDecode = new Base64().decodeBase64(fotoBase64);
+							BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByteDecode));
+							/* Pega o tipo da imagem */
+							int type = bufferedImage.getType() == 0 ? bufferedImage.TYPE_INT_ARGB
+									: bufferedImage.getType();
+							/* Cria imagem em tamanho reduzido */
+							BufferedImage resizedImagem = new BufferedImage(100, 100, type);
+							Graphics2D g = resizedImagem.createGraphics();
+							g.drawImage(bufferedImage, 0, 0, 100, 100, null);
+							/* Escreve imagem novamente, mas em tamanho reduzido */
+							ByteArrayOutputStream baos = new ByteArrayOutputStream();
+							ImageIO.write(resizedImagem, "png", baos);
+
+							/* Finaliza o processo */
+							g.dispose();
+
+							String miniaturaBase64 = "data:image/png;base64,"
+									+ DatatypeConverter.printBase64Binary(baos.toByteArray());
+
+							bean.setFotoBase64miniatura(miniaturaBase64);
+							/* Final miniatura imagem */
+
 						} else {
-							bean.setFotoBase64(request.getParameter("fotoTemp"));
-							bean.setContentType(request.getParameter("contentTypeTempImg"));
+							bean.setAtualizarImage(false);
 						}
 
 						Part curriculo = request.getPart("curriculo");
@@ -195,9 +231,8 @@ public class Usuario extends HttpServlet {
 							bean.setCurriculoBase64(curriculoBase64);
 							bean.setContentTypeCurriculo(curriculo.getContentType());
 
-						}else {
-							bean.setCurriculoBase64(request.getParameter("curriculoTemp"));
-							bean.setContentTypeCurriculo(request.getParameter("contentTypeTempPdf"));
+						} else {
+							bean.setAtualizarPdf(false);
 						}
 
 					}

@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Cadastro de Telefones</title>
 <link rel="stylesheet" href="resources/css/cadastro.css">
 
@@ -17,11 +17,11 @@
 		height="30px" width="30px"></a>
 	<center>
 		<h1>Cadastro de Telefones</h1>
-		<h3 style="color: orange">${msg}</h3>
+		<h3 style="color: blue">${msg}</h3>
 	</center>
 
 
-	<form action="salvarTelefones" method="post" style="position: center"
+	<form action="salvarTelefones" method="post" 
 		id="formUser">
 		<ul class="form-style-1">
 			<li>
@@ -42,7 +42,7 @@
 						<td>Número:</td>
 						<td><input type="text" id="numero" name="numero"
 							value="${telefone}" class="field-long"></td>
-						<td><select id="tipo" name="tipo">
+						<td><select id="tipo" name="tipo" style="width: 200px">
 								<option>Celular</option>
 								<option>Comercial</option>
 								<option>Residencial</option>
@@ -50,11 +50,14 @@
 					</tr>
 
 					<tr>
-						<td></td>
-						<td><input type="submit" value="Salvar"
+					<td></td>
+						<td>
+						<input type="submit" value="Salvar"
 							onclick="document.getElementById('formUser').action = 'salvarTelefones?acao=salvar'; return validarCampos() ? true : false">
-						</td>
+						<input type="submit" value="Voltar"
+							onclick="document.getElementById('formUser').action = 'salvarTelefones?acao=voltar'"></td>
 					</tr>
+					
 				</table>
 			</li>
 		</ul>
@@ -86,7 +89,7 @@
 					<td style="width: 150px" align="center"><a
 						href="salvarTelefones?acao=delete&numero=${fone.id}&user=${fone.usuario}"><img
 							alt="Excluir" width="20px" height="20px"
-							src="resources/img/excluir.png" title="Excluir"></a></td>
+							src="resources/img/excluir.png" title="Excluir" onclick="return confirm('Confirmar a exclusão?');"></a></td>
 				</tr>
 			</c:forEach>
 		</table>

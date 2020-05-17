@@ -1,10 +1,11 @@
+<%@page import="beans.BeanCursoJSP"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Cadastro de Usuário</title>
 <link rel="stylesheet" href="resources/css/cadastro.css">
 
@@ -22,7 +23,7 @@
 		height="30px" width="30px"></a>
 	<center>
 		<h1>Cadastro de Usuário</h1>
-		<h3 style="color: orange">${msg}</h3>
+		<h3 style="color: blue">${msg}</h3>
 	</center>
 
 
@@ -72,20 +73,14 @@
 					</tr>
 
 					<tr>
-						<td>Telefone:</td>
-						<td><input type="text" id="telefone" name="telefone"
-							value="${user.telefone}" placeholder="99999-9999"></td>
+						<td>CEP:</td>
+						<td><input type="text" id="cep" name="cep"
+							onblur="consultaCep();" value="${user.cep}"
+							placeholder="00000-000" maxlength="9"></td>
 
 						<td>IBGE:</td>
 						<td><input type="text" id="ibge" name="ibge"
 							value="${user.ibge}"></td>
-					</tr>
-
-					<tr>
-						<td>CEP:</td>
-						<td><input type="text" id="cep" name="cep"
-							onblur="consultaCep();" value="${user.cep}"
-							placeholder="00000-000"></td>
 					</tr>
 
 					<tr>
@@ -95,6 +90,21 @@
 							value="${user.fotoBase64}" /> <input type="text"
 							name="contentTypeTempImg" style="display: none"
 							readonly="readonly" value="${user.contentType}" /></td>
+							
+						<td>Status:</td>
+						<td><input type="checkbox" id="status" name="status" 
+							<%
+								if (request.getAttribute("user") != null) {
+									BeanCursoJSP user = (BeanCursoJSP) request.getAttribute("user");
+									if (user.isStatus()) {
+										out.print(" ");
+										out.print("checked = \"checked\"");
+										out.print(" ");
+									}
+								}
+							
+							%>
+						></td>
 					</tr>
 
 					<tr>
@@ -124,7 +134,7 @@
 
 			<tr>
 				<th align="center">Id</th>
-				<th align="center">Login</th>
+				<th align="center">Currículo</th>
 				<th align="center">Nome</th>
 				<th align="center">Fones</th>
 				<th align="center">Editar</th>
@@ -136,13 +146,33 @@
 			<c:forEach items="${usuarios}" var="user">
 				<tr>
 
-					<td style="width: 150px" align="center"><a
-						href="salvarUsuario?acao=download&tipo=imagem&user=${user.id}"><img
-							src='<c:out value="${user.tempFotoUser}"></c:out>' width="35px"
-							height="35px"> </a></td>
+					<c:if test="${user.fotoBase64miniatura.isEmpty() == false}">
+						<td style="width: 150px" align="center"><a
+							href="salvarUsuario?acao=download&tipo=imagem&user=${user.id}"><img
+								src='<c:out value="${user.fotoBase64miniatura}"></c:out>'
+								width="35px" height="35px"> </a></td>
+					</c:if>
 
-					<td style="width: 150px" align="center"><a
-						href="salvarUsuario?acao=download&tipo=curriculo&user=${user.id}">Currículo</a></td>
+					<c:if test="${user.fotoBase64miniatura == null}">
+						<td style="width: 150px" align="center"><img alt="Imagem User"
+							src="resources/img/user-padrao.png" width="35px" height="35px"
+							onclick="alert('Não possui imagem')"></td>
+					</c:if>
+
+
+					<c:if test="${user.curriculoBase64.isEmpty() == false}">
+						<td style="width: 150px" align="center"><a
+							href="salvarUsuario?acao=download&tipo=curriculo&user=${user.id}"><img
+								alt="Curriculo" src="resources/img/pdf.png" width="32px"
+								height="32px"> </a></td>
+					</c:if>
+					<c:if test="${user.curriculoBase64 == null}">
+						<td style="width: 150px" align="center"><img alt="Curriculo" src="resources/img/pdf.png"
+							width="32px" height="32px"
+							onclick="alert('Não possui curriculo')"></td>
+					</c:if>
+
+
 
 					<td style="width: 150px" align="center"><c:out
 							value="${user.nome}"></c:out></td>
@@ -161,7 +191,7 @@
 					<td style="width: 150px" align="center"><a
 						href="salvarUsuario?acao=delete&user=${user.id}"><img
 							alt="Excluir" width="20px" height="20px"
-							src="resources/img/excluir.png" title="Excluir"></a></td>
+							src="resources/img/excluir.png" title="Excluir" onclick="return confirm('Confirmar a exclusão?');"></a></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -186,9 +216,6 @@
 				return false;
 			} else if (document.getElementById("nome").value == '') {
 				alert('Informe o Nome');
-				return false;
-			} else if (document.getElementById("telefone").value == '') {
-				alert('Informe o Telefone');
 				return false;
 			}
 			return true;

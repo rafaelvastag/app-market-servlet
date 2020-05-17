@@ -41,6 +41,7 @@ public class Produto extends HttpServlet {
 
 				BeanProdutoJSP beanProdutoJSP = produtoDAO.findById(produto);
 				RequestDispatcher view = request.getRequestDispatcher("/cadastroProduto.jsp");
+				request.setAttribute("produtos", produtoDAO.findAll());
 				request.setAttribute("produto", beanProdutoJSP);
 				view.forward(request, response);
 
@@ -109,7 +110,7 @@ public class Produto extends HttpServlet {
 				}
 
 				if (valor != null && !valor.isEmpty())
-					produto.setValor(Double.parseDouble(valor));
+					produto.setValor(Double.parseDouble(valor.replace(",", ".")));
 
 				if (msg != null) {
 					request.setAttribute("msg", msg);
