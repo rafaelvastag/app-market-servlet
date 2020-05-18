@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import beans.BeanProdutoJSP;
+import beans.beanCategoria;
 import connection.SingleConnection;
 
 public class ProdutoDAO {
@@ -21,11 +22,12 @@ public class ProdutoDAO {
 	public void salvar(BeanProdutoJSP produto) {
 		try {
 
-			String sql = "insert into produto (nome,quantidade,preco) values (?,?,?)";
+			String sql = "insert into produto (nome,quantidade,preco,categoria_id) values (?,?,?,?)";
 			PreparedStatement insert = connection.prepareStatement(sql);
 			insert.setString(1, produto.getNome());
 			insert.setDouble(2, produto.getQuantidade());
 			insert.setDouble(3, produto.getValor());
+			insert.setLong(4, produto.getCategoria_id());
 			insert.execute();
 			connection.commit();
 
@@ -52,7 +54,31 @@ public class ProdutoDAO {
 				BeanProdutoJSP produto = new BeanProdutoJSP(resultSet.getString("nome"), resultSet.getDouble("preco"),
 						resultSet.getDouble("quantidade"));
 				produto.setId(resultSet.getLong("id"));
+				produto.setCategoria_id(resultSet.getLong("categoria_id"));
 				lista.add(produto);
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lista;
+
+	}
+	
+	public List<beanCategoria> findCategorias() {
+
+		List<beanCategoria> lista = new ArrayList<>();
+		String sql = "select * from categoria";
+
+		try {
+			PreparedStatement findAll = connection.prepareStatement(sql);
+			ResultSet resultSet = findAll.executeQuery();
+
+			while (resultSet.next()) {
+				beanCategoria categoria = new beanCategoria(resultSet.getString("nome"));
+				categoria.setId(resultSet.getLong("id"));
+				lista.add(categoria);
 
 			}
 
@@ -74,6 +100,7 @@ public class ProdutoDAO {
 			produto.setNome(resultSet.getString("nome"));
 			produto.setQuantidade(resultSet.getDouble("quantidade"));
 			produto.setValor(resultSet.getDouble("preco"));
+			produto.setCategoria_id(resultSet.getLong("categoria_id"));
 			return produto;
 		}
 
@@ -83,12 +110,13 @@ public class ProdutoDAO {
 	public void atualizar(BeanProdutoJSP produto) {
 
 		try {
-			String sql = "update produto set nome = ?, quantidade = ?, preco = ?  where id = " + produto.getId();
+			String sql = "update produto set nome = ?, quantidade = ?, preco = ?, categoria_id = ?  where id = " + produto.getId();
 
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, produto.getNome());
 			preparedStatement.setDouble(2, produto.getQuantidade());
 			preparedStatement.setDouble(3, produto.getValor());
+			preparedStatement.setLong(4, produto.getCategoria_id());
 			preparedStatement.executeUpdate();
 			connection.commit();
 		} catch (Exception e) {

@@ -6,6 +6,7 @@ public class BeanProdutoJSP {
 	private String nome;
 	private Double valor;
 	private Double quantidade;
+	private Long categoria_id;
 	
 	public BeanProdutoJSP() {
 	}
@@ -15,6 +16,15 @@ public class BeanProdutoJSP {
 		this.nome = nome;
 		this.valor = preco;
 		this.quantidade = quantidade;
+	}
+	
+	
+	public Long getCategoria_id() {
+		return categoria_id;
+	}
+
+	public void setCategoria_id(Long categoria_id) {
+		this.categoria_id = categoria_id;
 	}
 
 	public Long getId() {

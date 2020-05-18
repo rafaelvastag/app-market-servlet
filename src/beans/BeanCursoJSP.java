@@ -20,10 +20,29 @@ public class BeanCursoJSP {
 	private String curriculoBase64;
 	private String contentTypeCurriculo;
 	private String tempCurriculoUser;
+	private String sexo;
+	private String perfil;
 	
 	private boolean status = false;
 	private boolean atualizarImage = true;
 	private boolean atualizarPdf = true;
+
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
+	}
+
+	
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
 
 	public void setStatus(boolean status) {
 		this.status = status;

@@ -65,7 +65,7 @@
 					<tr>
 						<td>Nome:</td>
 						<td><input type="text" id="nome" name="nome"
-							value="${user.nome}"></td>
+							value="${user.nome}" class="field-long"></td>
 
 						<td>UF:</td>
 						<td><input type="text" id="uf" name="uf"
@@ -76,7 +76,7 @@
 						<td>CEP:</td>
 						<td><input type="text" id="cep" name="cep"
 							onblur="consultaCep();" value="${user.cep}"
-							placeholder="00000-000" maxlength="9"></td>
+							placeholder="00000-000" maxlength="9" class="field-long"></td>
 
 						<td>IBGE:</td>
 						<td><input type="text" id="ibge" name="ibge"
@@ -90,21 +90,17 @@
 							value="${user.fotoBase64}" /> <input type="text"
 							name="contentTypeTempImg" style="display: none"
 							readonly="readonly" value="${user.contentType}" /></td>
-							
+
 						<td>Status:</td>
-						<td><input type="checkbox" id="status" name="status" 
-							<%
-								if (request.getAttribute("user") != null) {
-									BeanCursoJSP user = (BeanCursoJSP) request.getAttribute("user");
-									if (user.isStatus()) {
-										out.print(" ");
-										out.print("checked = \"checked\"");
-										out.print(" ");
-									}
-								}
-							
-							%>
-						></td>
+						<td><input type="checkbox" id="status" name="status"
+							<%if (request.getAttribute("user") != null) {
+				BeanCursoJSP user = (BeanCursoJSP) request.getAttribute("user");
+				if (user.isStatus()) {
+					out.print(" ");
+					out.print("checked = \"checked\"");
+					out.print(" ");
+				}
+			}%>></td>
 					</tr>
 
 					<tr>
@@ -114,6 +110,75 @@
 							readonly="readonly" value="${user.curriculoBase64}" /> <input
 							type="text" name="contentTypeTempPdf" style="display: none"
 							readonly="readonly" value="${user.contentTypeCurriculo}" /></td>
+
+						<td>Gênero</td>
+						<td><input type="radio" name="sexo"
+							<%if (request.getAttribute("user") != null) {
+				BeanCursoJSP user = (BeanCursoJSP) request.getAttribute("user");
+				if (user.getSexo().equalsIgnoreCase("masculino")) {
+					out.print(" ");
+					out.print("checked = \"checked\"");
+					out.print(" ");
+				}
+			}%>
+							value="masculino">Masculino <input type="radio"
+							name="sexo"
+							<%if (request.getAttribute("user") != null) {
+				BeanCursoJSP user = (BeanCursoJSP) request.getAttribute("user");
+				if (user.getSexo().equalsIgnoreCase("feminino")) {
+					out.print(" ");
+					out.print("checked = \"checked\"");
+					out.print(" ");
+				}
+			}%>
+							value="feminino">Feminino</td>
+					</tr>
+
+					<tr>
+						<td>Perfil:</td>
+						<td><select id="perfil" name="perfil" style="width: 250px">
+
+								<option value="nao_informado">Selecione</option>
+								<option value="admin"
+									<%if (request.getAttribute("user") != null) {
+				BeanCursoJSP user = (BeanCursoJSP) request.getAttribute("user");
+				if (user.getPerfil().equalsIgnoreCase("admin")) {
+					out.print(" ");
+					out.print("selected = \"selected\"");
+					out.print(" ");
+				}
+			}%>>Administrador</option>
+								<option value="gerente"
+									<%if (request.getAttribute("user") != null) {
+				BeanCursoJSP user = (BeanCursoJSP) request.getAttribute("user");
+				if (user.getPerfil().equalsIgnoreCase("gerente")) {
+					out.print(" ");
+					out.print("selected = \"selected\"");
+					out.print(" ");
+				}
+			}%>>Gerente</option>
+								<option value="secretario"
+									<%if (request.getAttribute("user") != null) {
+				BeanCursoJSP user = (BeanCursoJSP) request.getAttribute("user");
+				if (user.getPerfil().equalsIgnoreCase("secretario")) {
+					out.print(" ");
+					out.print("selected = \"selected\"");
+					out.print(" ");
+				}
+			}%>>Secretário(a)</option>
+								<option value="funcionario"
+									<%if (request.getAttribute("user") != null) {
+				BeanCursoJSP user = (BeanCursoJSP) request.getAttribute("user");
+				if (user.getPerfil().equalsIgnoreCase("funcionario")) {
+					out.print(" ");
+					out.print("checked = \"checked\"");
+					out.print(" ");
+				}
+			}%>>Funcionário</option>
+
+
+						</select></td>
+
 					</tr>
 
 					<tr>
@@ -124,6 +189,22 @@
 							onclick="document.getElementById('formUser').action = 'salvarUsuario?acao=reset' "></td>
 					</tr>
 				</table>
+			</li>
+		</ul>
+	</form>
+
+
+	<form action="servletPesquisa" method="post" style="width: 90%">
+		<ul class="form-style-1">
+			<li>
+				<table>
+					<tr>
+						<td>Descrição</td>
+						<td><input type="text" id="descricaoConsulta" name="descricaoconsulta"></td>
+						<td><input type="submit" value="Pesquisar"></td>					
+					</tr>
+				</table>
+
 			</li>
 		</ul>
 	</form>
@@ -154,9 +235,9 @@
 					</c:if>
 
 					<c:if test="${user.fotoBase64miniatura == null}">
-						<td style="width: 150px" align="center"><img alt="Imagem User"
-							src="resources/img/user-padrao.png" width="35px" height="35px"
-							onclick="alert('Não possui imagem')"></td>
+						<td style="width: 150px" align="center"><img
+							alt="Imagem User" src="resources/img/user-padrao.png"
+							width="35px" height="35px" onclick="alert('Não possui imagem')"></td>
 					</c:if>
 
 
@@ -167,8 +248,8 @@
 								height="32px"> </a></td>
 					</c:if>
 					<c:if test="${user.curriculoBase64 == null}">
-						<td style="width: 150px" align="center"><img alt="Curriculo" src="resources/img/pdf.png"
-							width="32px" height="32px"
+						<td style="width: 150px" align="center"><img alt="Curriculo"
+							src="resources/img/pdf.png" width="32px" height="32px"
 							onclick="alert('Não possui curriculo')"></td>
 					</c:if>
 
@@ -191,7 +272,8 @@
 					<td style="width: 150px" align="center"><a
 						href="salvarUsuario?acao=delete&user=${user.id}"><img
 							alt="Excluir" width="20px" height="20px"
-							src="resources/img/excluir.png" title="Excluir" onclick="return confirm('Confirmar a exclusão?');"></a></td>
+							src="resources/img/excluir.png" title="Excluir"
+							onclick="return confirm('Confirmar a exclusão?');"></a></td>
 				</tr>
 			</c:forEach>
 		</table>

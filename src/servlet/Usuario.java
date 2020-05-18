@@ -154,6 +154,8 @@ public class Usuario extends HttpServlet {
 			String cidade = request.getParameter("cidade");
 			String estado = request.getParameter("uf");
 			String ibge = request.getParameter("ibge");
+			String sexo = request.getParameter("sexo");
+			String perfil = request.getParameter("perfil");
 
 			BeanCursoJSP bean = new BeanCursoJSP();
 
@@ -168,6 +170,8 @@ public class Usuario extends HttpServlet {
 			bean.setCidade(cidade);
 			bean.setEstado(estado);
 			bean.setIbge(ibge);
+			bean.setSexo(sexo);
+			bean.setPerfil(perfil);
 
 			if (request.getParameter("status") != null && request.getParameter("status").equalsIgnoreCase("on")) {
 				bean.setStatus(true);
