@@ -64,11 +64,12 @@
 
 					<tr>
 						<td></td>
-						<td><input type="submit" value="Salvar"
+						<td><input type="submit" value="Salvar" style="width: 90px"
 							onclick="document.getElementById('formProduto').action = 'salvarProduto?acao=salvar'">
-							<input type="submit" value="Cancelar"
+							<input type="submit" value="Cancelar" style="width: 90px"
 							onclick="document.getElementById('formProduto').action = 'salvarProduto?acao=reset'"></td>
 					</tr>
+					
 				</table>
 
 			</li>

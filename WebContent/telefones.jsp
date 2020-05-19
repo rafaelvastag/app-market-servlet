@@ -50,11 +50,13 @@
 
 					<tr>
 						<td></td>
-						<td><input type="submit" value="Salvar"
+						<td><input type="submit" value="Salvar" style="width: 90px"
 							onclick="document.getElementById('formUser').action = 'salvarTelefones?acao=salvar'; return validarCampos() ? true : false">
-							<input type="submit" value="Voltar"
+							<input type="submit" value="Voltar" style="width: 90px"
 							onclick="document.getElementById('formUser').action = 'salvarTelefones?acao=voltar'"></td>
 					</tr>
+					
+					
 
 				</table>
 			</li>
