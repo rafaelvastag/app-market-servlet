@@ -21,8 +21,7 @@
 	</center>
 
 
-	<form action="salvarTelefones" method="post" 
-		id="formUser">
+	<form action="salvarTelefones" method="post" id="formUser">
 		<ul class="form-style-1">
 			<li>
 				<table>
@@ -50,14 +49,13 @@
 					</tr>
 
 					<tr>
-					<td></td>
-						<td>
-						<input type="submit" value="Salvar"
+						<td></td>
+						<td><input type="submit" value="Salvar"
 							onclick="document.getElementById('formUser').action = 'salvarTelefones?acao=salvar'; return validarCampos() ? true : false">
-						<input type="submit" value="Voltar"
+							<input type="submit" value="Voltar"
 							onclick="document.getElementById('formUser').action = 'salvarTelefones?acao=voltar'"></td>
 					</tr>
-					
+
 				</table>
 			</li>
 		</ul>
@@ -89,7 +87,8 @@
 					<td style="width: 150px" align="center"><a
 						href="salvarTelefones?acao=delete&numero=${fone.id}&user=${fone.usuario}"><img
 							alt="Excluir" width="20px" height="20px"
-							src="resources/img/excluir.png" title="Excluir" onclick="return confirm('Confirmar a exclusão?');"></a></td>
+							src="resources/img/excluir.png" title="Excluir"
+							onclick="return confirm('Confirmar a exclusão?');"></a></td>
 				</tr>
 			</c:forEach>
 		</table>
